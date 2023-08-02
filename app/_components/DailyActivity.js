@@ -2,6 +2,8 @@
 
 import * as d3 from "d3";
 import { useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCircle } from '@fortawesome/free-solid-svg-icons'
 
 const getData = (userId) => {
   return new Promise((resolve, reject) => {
@@ -18,10 +20,10 @@ const drawChart = () => {
     .then(({ data }) => {
       // define chart dimensions
       const width = 835
-      const height = 320
+      const height = 320 - 110
       const margin = {
         left: 40,
-        top: 110,
+        top: 20,
         right: 90,
         bottom: 60
       }
@@ -63,13 +65,29 @@ const drawChart = () => {
         .domain([maxKilogram + 1, minKilogram - 1])
         .range([0, height - margin.top - margin.bottom])
 
-      svg.append('g')
+      const xAxis = svg.append('g')
         .attr('transform', `translate(${margin.left}, ${height - margin.bottom})`)
-        .call(d3.axisBottom(x))
+        .call(d3.axisBottom(x).tickSize(0).tickPadding(20))
 
-      svg.append('g')
+      xAxis.select(".domain")
+        .attr('stroke', '#DEDEDE')
+        .attr('stroke-width', '1px')
+
+      xAxis.selectAll(".tick")
+        .attr('stroke', "#9B9EAC")
+
+      const yKgAxis = svg.append('g')
         .attr('transform', `translate(${width - margin.right}, ${margin.top})`)
-        .call(d3.axisRight(yKilograms).ticks(maxKilogram - minKilogram))
+        .call(d3.axisRight(yKilograms)
+          .ticks(maxKilogram - minKilogram)
+          .tickSize(0)
+          .tickPadding(20)
+        )
+
+      yKgAxis.select(".domain").remove()
+
+      yKgAxis.selectAll(".tick > text")
+        .attr('stroke', "#9B9EAC")
 
       // draw horizontal dotted lines
       const nLines = maxKilogram - minKilogram + 2
@@ -101,7 +119,7 @@ const drawChart = () => {
         .domain([maxCalories + 50, 0])
         .range([0, height - margin.top - margin.bottom])
 
-      const quarterBandwith = x.bandwidth() / 4
+      const twelfthBandwith = x.bandwidth() / 12
 
       svg.append('g')
         .selectAll('barsKilograms')
@@ -111,7 +129,8 @@ const drawChart = () => {
         .attr('y', d => yKilograms(d.kilogram))
         .attr('width', '8px')
         .attr('height', d => yKilograms(minKilogram - 1) - yKilograms(d.kilogram))
-        .attr('transform', `translate(${margin.left + quarterBandwith - 4}, ${margin.top})`)
+        .attr('transform', `translate(${margin.left + 5 * twelfthBandwith - 4}, ${margin.top})`)
+        .attr('fill', '#282D30')
         .attr('rx', '3')
 
       svg.append('g')
@@ -122,23 +141,48 @@ const drawChart = () => {
         .attr('y', d => yCalories(d.calories))
         .attr('width', '8px')
         .attr('height', d => yCalories(0) - yCalories(d.calories))
-        .attr('transform', `translate(${margin.left + 3 * quarterBandwith - 4}, ${margin.top})`)
-        .attr('fill', 'red')
+        .attr('transform', `translate(${margin.left + 7 * twelfthBandwith - 4}, ${margin.top})`)
+        .attr('fill', '#E60000')
         .attr('rx', '3')
     })
     .catch(err => console.log(err))
 }
 
-
 const DailyActivity = () => {
 
   useEffect(() => {
     drawChart()
-  })
+  }, [])
 
   return (
-    <div id="activity" style={{ backgroundColor: '#FBFBFB' }}>
+    <div style={{
+      backgroundColor: '#FBFBFB',
+      width: 835,
+      height: 322
+    }}>
+      <div
+        className="flex justify-between"
+        style={{
+          marginLeft: 40,
+          marginRight: 80,
+          marginTop: 24,
+          marginBottom: 64
+        }}
+      >
+        <h1>Activité Quotidienne</h1>
+        <div className="flex align-middle">
+          <div>
+            <FontAwesomeIcon icon={faCircle} size="2xs" style={{ color: "#282D30", }} />
+          </div>
+          <p className="ml-2 mr-8">Poids (kg)</p>
+          <div>
+            <FontAwesomeIcon icon={faCircle} size="2xs" style={{ color: "#E60000", }} />
+          </div>
+          <p className="ml-2">Calories brûlées (kCal)</p>
+        </div>
+      </div>
 
+      <div id="activity"></div>
     </div>
   )
 }
