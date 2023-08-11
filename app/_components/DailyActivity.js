@@ -39,9 +39,7 @@ const drawChart = () => {
         return session
       })
 
-      const xDomain = graphData.map(session => {
-        return session.day
-      })
+      const xDomain = graphData.map(session => session.day)
 
       const x = d3.scaleBand()
         .domain(xDomain)
@@ -165,7 +163,7 @@ const DailyActivity = () => {
         style={{
           marginLeft: 40,
           marginRight: 80,
-          marginTop: 24,
+          paddingTop: 24,
           marginBottom: 64
         }}
       >
