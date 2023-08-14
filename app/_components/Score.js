@@ -2,6 +2,7 @@
 
 import { PieChart, Pie, ResponsiveContainer } from 'recharts';
 import { useState, useEffect } from 'react'
+import Loading from './Loading'
 
 const data = [
   {
@@ -15,9 +16,6 @@ const data = [
     fill: 'red',
   }
 ];
-
-const LoadingComponent = () => <h3>Loading...</h3>
-
 
 export default function Score() {
   const [isClient, setIsClient] = useState(false)
@@ -54,8 +52,7 @@ export default function Score() {
         objectif
       </p>
     </div>
-
     :
-    <LoadingComponent />
+    <Loading />
 
 }

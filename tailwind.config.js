@@ -14,7 +14,13 @@ module.exports = {
       },
       colors: {
         'primary': '#020203',
-        'secondary': '#FF0101'
+        'secondary': '#FF0101',
+        'tertiary': '#74798C',
+        'c-gray': '#FBFBFB',
+      },
+      screens: {
+        'desktop': '1280px',
+        // => @media (min-width: 1280px) { ... }
       },
     },
   },
