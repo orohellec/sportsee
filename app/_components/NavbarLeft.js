@@ -26,8 +26,6 @@ const NavbarLeft = () => {
           left: '50%',
           writingMode: 'vertical-lr',
           color: 'white',
-
-          // transform: 'rotate(270deg)',
           transform: 'rotate(180deg) translateX(50%)',
           fontSize: '12px'
         }}

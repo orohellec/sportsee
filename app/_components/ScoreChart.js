@@ -4,28 +4,28 @@ import { PieChart, Pie, ResponsiveContainer } from 'recharts';
 import { useState, useEffect } from 'react'
 import Loading from './Loading'
 
-const data = [
-  {
-    name: '',
-    score: 50,
-    fill: 'none'
-  },
-  {
-    name: '25-29',
-    score: 10,
-    fill: 'red',
-  }
-];
-
-export default function Score() {
+export default function Score({ score }) {
   const [isClient, setIsClient] = useState(false)
 
   useEffect(() => {
     setIsClient(true)
   }, [])
 
+  const data = [
+    {
+      score: 100 - score * 100,
+      fill: 'none'
+    },
+    {
+      score: score * 100,
+      fill: 'red',
+    }
+  ]
+
+  const commonClasses = 'w-64 h-64 bg-c-gray'
+
   return isClient ?
-    <div className="relative bg-[#FBFBFB] w-64 h-64">
+    <div className={`relative ${commonClasses}`}>
       <h3 className="absolute top-[22px] left-[25px]">Score</h3>
       <ResponsiveContainer width='100%' height='100%'>
         <PieChart margin={{ top: 20, right: 20, left: 20, bottom: 20 }}>
@@ -53,6 +53,6 @@ export default function Score() {
       </p>
     </div>
     :
-    <Loading />
+    <Loading twClasses={commonClasses} />
 
 }

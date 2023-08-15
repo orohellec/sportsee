@@ -17,6 +17,7 @@ module.exports = {
         'secondary': '#FF0101',
         'tertiary': '#74798C',
         'c-gray': '#FBFBFB',
+        'c-black': '#282D30'
       },
       screens: {
         'desktop': '1280px',

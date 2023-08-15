@@ -1,10 +1,14 @@
 
 import DailyActivity from '../_components/DailyActivity'
-import Score from '../_components/Score'
+import ScoreChart from '../_components/ScoreChart'
 import SmallCard from '../_components/SmallCard'
+import PerformanceChart from '../_components/PerformanceChart'
 
-async function getData(userId) {
-  const res = await fetch(`http://localhost:3000/user/${userId}`)
+const URL = 'http://localhost:3000/user'
+
+const getData = async (userId, breakpoint) => {
+  const res = await fetch(`${URL}/${userId}${breakpoint}`)
+
   if (!res.ok) {
     throw new Error('Failed to fetch data')
   }
@@ -13,24 +17,34 @@ async function getData(userId) {
 }
 
 export default async function Home() {
-  const { data } = await getData(12)
+  const [userData, perfData, activityData, sessionsData] = await Promise.all(
+    [
+      getData(12, ''),
+      getData(12, '/performance'),
+      getData(12, '/activity'),
+      getData(12, '/average-sessions')
+    ]
+  )
 
-  const dataStat = data.keyData
+  const dataStat = userData.data.keyData
+  const userInfos = userData.data.userInfos
+
+  const todayScore = userData.data.todayScore
 
   return (
     <main className='mx-auto my-10'>
       <h1 className='text-5xl mb-4'>
         Bonjour
-        <span className='text-secondary'>{` ${data.userInfos.firstName}`}</span>
+        <span className='text-secondary'>{` ${userInfos.firstName}`}</span>
       </h1>
       <p className="mb-10">Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
       <div className="flex flex-col-reverse desktop:flex-row gap-8">
         <div className='flex flex-col gap-6'>
-          <DailyActivity />
+          <DailyActivity data={activityData.data} />
           <div className='flex justify-between'>
-            <Score />
-            <Score />
-            <Score />
+            <ScoreChart score={todayScore} />
+            <PerformanceChart data={perfData.data} />
+            <ScoreChart score={todayScore} />
           </div>
         </div>
         <div className='flex flex-row justify-between desktop:flex-col'>
@@ -66,7 +80,6 @@ export default async function Home() {
               text: ''
             }}
           />
-
         </div>
       </div>
     </main>
