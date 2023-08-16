@@ -17,7 +17,7 @@ export default function ({ data }) {
     setIsClient(true)
   }, [])
 
-  const commmonClass = "w-64 h-64 bg-c-black text-white"
+  const commonClasses = "w-64 h-64 bg-c-black text-white"
 
   const kind = data.kind
   const graphData = data.data.map(d => {
@@ -27,7 +27,7 @@ export default function ({ data }) {
   })
 
   return isClient ?
-    <div className={`${commmonClass}`}>
+    <div className={`${commonClasses}`}>
       <ResponsiveContainer
         width='100%'
         height='100%'
@@ -52,6 +52,6 @@ export default function ({ data }) {
       </ResponsiveContainer>
 
     </div> :
-    <Loading twClasses={commmonClass} />
+    <Loading twClasses={commonClasses} />
 }
 

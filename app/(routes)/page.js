@@ -3,6 +3,7 @@ import DailyActivity from '../_components/DailyActivity'
 import ScoreChart from '../_components/ScoreChart'
 import SmallCard from '../_components/SmallCard'
 import PerformanceChart from '../_components/PerformanceChart'
+import SessionDurationChart from '../_components/SessionDurationChart'
 
 const URL = 'http://localhost:3000/user'
 
@@ -42,7 +43,7 @@ export default async function Home() {
         <div className='flex flex-col gap-6'>
           <DailyActivity data={activityData.data} />
           <div className='flex justify-between'>
-            <ScoreChart score={todayScore} />
+            <SessionDurationChart data={sessionsData.data} />
             <PerformanceChart data={perfData.data} />
             <ScoreChart score={todayScore} />
           </div>
