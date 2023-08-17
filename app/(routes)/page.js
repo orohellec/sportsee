@@ -1,6 +1,6 @@
 
 import DailyActivity from '../_components/DailyActivity'
-import ScoreChart from '../_components/ScoreChart'
+import ScoreChartRadial from '../_components/ScoreChartRadial'
 import SmallCard from '../_components/SmallCard'
 import PerformanceChart from '../_components/PerformanceChart'
 import SessionDurationChart from '../_components/SessionDurationChart'
@@ -45,7 +45,8 @@ export default async function Home() {
           <div className='flex justify-between'>
             <SessionDurationChart data={sessionsData.data} />
             <PerformanceChart data={perfData.data} />
-            <ScoreChart score={todayScore} />
+            <ScoreChartRadial data={todayScore} />
+
           </div>
         </div>
         <div className='flex flex-row justify-between desktop:flex-col'>

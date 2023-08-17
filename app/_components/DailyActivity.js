@@ -1,9 +1,10 @@
 'use client'
 
 import * as d3 from "d3";
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircle } from '@fortawesome/free-solid-svg-icons'
+import Loading from "./Loading";
 
 const drawChart = data => {
   // define chart dimensions
@@ -134,41 +135,47 @@ const drawChart = data => {
 
 const DailyActivity = ({ data }) => {
 
+  const [isClient, setIsClient] = useState(false)
+
   useEffect(() => {
+    setIsClient(true)
+  }, [isClient])
+
+  if (isClient) {
     drawChart(data)
-  }, [])
-
-  return (
-    <div style={{
-      backgroundColor: '#FBFBFB',
-      width: 835,
-      height: 322
-    }}>
-      <div
-        className="flex justify-between"
-        style={{
-          marginLeft: 40,
-          marginRight: 80,
-          paddingTop: 24,
-          marginBottom: 64
-        }}
-      >
-        <h1>Activité Quotidienne</h1>
-        <div className="flex align-middle">
-          <div>
-            <FontAwesomeIcon icon={faCircle} size="2xs" style={{ color: "#282D30", }} />
+    return (
+      <div style={{
+        backgroundColor: '#FBFBFB',
+        width: 835,
+        height: 322
+      }}>
+        <div
+          className="flex justify-between"
+          style={{
+            marginLeft: 40,
+            marginRight: 80,
+            paddingTop: 24,
+            marginBottom: 64
+          }}
+        >
+          <h1>Activité Quotidienne</h1>
+          <div className="flex align-middle">
+            <div>
+              <FontAwesomeIcon icon={faCircle} size="2xs" style={{ color: "#282D30", }} />
+            </div>
+            <p className="ml-2 mr-8">Poids (kg)</p>
+            <div>
+              <FontAwesomeIcon icon={faCircle} size="2xs" style={{ color: "#E60000", }} />
+            </div>
+            <p className="ml-2">Calories brûlées (kCal)</p>
           </div>
-          <p className="ml-2 mr-8">Poids (kg)</p>
-          <div>
-            <FontAwesomeIcon icon={faCircle} size="2xs" style={{ color: "#E60000", }} />
-          </div>
-          <p className="ml-2">Calories brûlées (kCal)</p>
         </div>
-      </div>
 
-      <div id="activity"></div>
-    </div>
-  )
+        <div id="activity"></div>
+      </div>
+    )
+  }
+  return <Loading twClasses='bg-c-gray h-[322px] w-[835px]' />
 }
 
 export default DailyActivity
