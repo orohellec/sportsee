@@ -102,6 +102,8 @@ const drawChart = data => {
     return value.calories
   })
 
+  console.log(graphData)
+
   const yCalories = d3.scaleLinear()
     .domain([maxCalories + 50, 0])
     .range([0, height - margin.top - margin.bottom])
@@ -131,6 +133,24 @@ const drawChart = data => {
     .attr('transform', `translate(${margin.left + 7 * twelfthBandwith - 4}, ${margin.top})`)
     .attr('fill', '#E60000')
     .attr('rx', '3')
+
+  // custom tooltip
+  // const customTooltip = d3.select('#activity')
+  //   .append('div')
+  //   .style('position', 'absolute')
+  //   .style('width', '100px')
+  //   .style('height', '50px')
+  //   .style('top', '0')
+  //   .style('left', '0')
+  //   .text('test')
+
+  // var mousemove = function(d) {
+  //   Tooltip
+  //     .html("The exact value of<br>this cell is: " + d.value)
+  //     .style("left", (d3.mouse(this)[0]+70) + "px")
+  //     .style("top", (d3.mouse(this)[1]) + "px")
+  // }
+
 }
 
 const DailyActivity = ({ data }) => {
@@ -171,7 +191,7 @@ const DailyActivity = ({ data }) => {
           </div>
         </div>
 
-        <div id="activity"></div>
+        <div id="activity" className="relative"></div>
       </div>
     )
   }

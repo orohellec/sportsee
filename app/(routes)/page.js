@@ -1,5 +1,6 @@
 
-import DailyActivity from '../_components/DailyActivity'
+// import DailyActivity from '../_components/DailyActivity'
+import DailyActivityChart from '../_components/DailyActivityChart'
 import ScoreChartRadial from '../_components/ScoreChartRadial'
 import SmallCard from '../_components/SmallCard'
 import PerformanceChart from '../_components/PerformanceChart'
@@ -41,7 +42,8 @@ export default async function Home() {
       <p className="mb-10">Félicitation ! Vous avez explosé vos objectifs hier 👏</p>
       <div className="flex flex-col-reverse desktop:flex-row gap-8">
         <div className='flex flex-col gap-6'>
-          <DailyActivity data={activityData.data} />
+          {/* <DailyActivity data={activityData.data} /> */}
+          <DailyActivityChart data={activityData.data} />
           <div className='flex justify-between'>
             <SessionDurationChart data={sessionsData.data} />
             <PerformanceChart data={perfData.data} />
