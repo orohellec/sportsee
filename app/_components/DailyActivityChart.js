@@ -71,13 +71,13 @@ export default function ({ data }) {
             barGap={'10%'}
             margin={{ bottom: 0 }}
           >
-            <XAxis dataKey='day' />
+
             <YAxis
               yAxisId={'weight'}
               type="number"
               domain={[minWeight - 1, maxWeight + 1]}
               orientation='right'
-              tickCount={8}
+              tickCount={maxWeight - minWeight + 3}
               minTickGap={1}
             />
             <YAxis
@@ -93,6 +93,7 @@ export default function ({ data }) {
               cursor={{ fillOpacity: '0.5' }}
             />
             <CartesianGrid strokeDasharray="4" vertical={false} />
+            <XAxis dataKey='day' />
             <Bar dataKey='kilogram' fill='black' yAxisId={'weight'} radius={[5, 5, 0, 0]} />
             <Bar dataKey='calories' fill='#E60000' yAxisId={'calories'} radius={[5, 5, 0, 0]} />
 

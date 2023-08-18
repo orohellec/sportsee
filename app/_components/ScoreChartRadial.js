@@ -14,11 +14,10 @@ export default function ({ data }) {
   const commonClasses = 'w-64 h-64 bg-c-gray'
   const graphData = [
     {
-      score: 100 - data * 100,
+      score: 100,
       fill: 'none'
     },
     {
-      // score: data * 100,
       score: data * 100,
       fill: 'red',
     },

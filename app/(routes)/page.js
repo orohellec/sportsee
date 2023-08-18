@@ -7,9 +7,10 @@ import PerformanceChart from '../_components/PerformanceChart'
 import SessionDurationChart from '../_components/SessionDurationChart'
 
 const URL = 'http://localhost:3000/user'
+const userId = 12
 
 const getData = async (userId, breakpoint) => {
-  const res = await fetch(`${URL}/${userId}${breakpoint}`)
+  const res = await fetch(`${URL}/${userId}${breakpoint}`, { cache: 'no-store' })
 
   if (!res.ok) {
     throw new Error('Failed to fetch data')
@@ -21,17 +22,17 @@ const getData = async (userId, breakpoint) => {
 export default async function Home() {
   const [userData, perfData, activityData, sessionsData] = await Promise.all(
     [
-      getData(12, ''),
-      getData(12, '/performance'),
-      getData(12, '/activity'),
-      getData(12, '/average-sessions')
+      getData(userId, ''),
+      getData(userId, '/performance'),
+      getData(userId, '/activity'),
+      getData(userId, '/average-sessions')
     ]
   )
 
   const dataStat = userData.data.keyData
   const userInfos = userData.data.userInfos
 
-  const todayScore = userData.data.todayScore
+  const todayScore = userData.data.todayScore || userData.data.score
 
   return (
     <main className='mx-auto my-10'>
